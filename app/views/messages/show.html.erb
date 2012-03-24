@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Phone number:</b>
+  <%= @message.phone_number %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @message.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @message.longitude %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @message.type %>
+</p>
+
+<p>
+  <b>Qty:</b>
+  <%= @message.qty %>
+</p>
+
+<p>
+  <b>Msg:</b>
+  <%= @message.msg %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @message.price %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @message.city %>
+</p>
+<div>
+	<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=15&markers=#{@message.latitude}%2C#{@message.longitude}" %>	
+</div>
+<ul>
+<% for location in @message.nearbys(10) %>
+  <li><%= link_to location.city, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>
