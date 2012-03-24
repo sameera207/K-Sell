@@ -44,38 +44,6 @@ LOCK TABLES `inbox` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `messages`
---
-
-DROP TABLE IF EXISTS `messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `phone_number` varchar(255) DEFAULT NULL,
-  `latitude` float DEFAULT NULL,
-  `longitude` float DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `msg` text,
-  `price` float DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `messages`
---
-
-LOCK TABLES `messages` WRITE;
-/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `multipartinbox`
 --
 

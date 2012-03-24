@@ -1,15 +1,32 @@
 class MessagesController < ApplicationController
+  
   # GET /messages
   # GET /messages.json
   def index
+    
     if params[:search].present?
-      @messages = Message.near(params[:search], 10, :order => :distance)
+      search_word = WordSplitter.build_search(params[:search])
+      @search_by_key = Message.by_key(search_word[0])
+      
+      p "-------------------------------------------------------"
+      p search_word
+       
+      if search_word[0].nil?
+         p "1"
+        @messages = Message.by_msg(params[:search])
+      else
+        p "2"
+        @messages = @search_by_key.by_msg(search_word[1])     
+      end
+      unless search_word[2].nil?
+        p "3"
+        @messages = @messages.near(search_word[2], 10, :order => :distance)  
+      end
+       
     else
       @messages = Message.all
     end
     
-    
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @messages }
