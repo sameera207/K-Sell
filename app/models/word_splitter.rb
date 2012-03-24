@@ -7,4 +7,24 @@ class WordSplitter
     city = paras[2].strip if paras[2]  
     [key, msg, city]  
   end
+  
+  def self.format_word search_param
+    type = category = message = ""
+    search = search_param.strip
+    type = search[0..3]
+    category = search.split(" ")[1]
+    message = WordSplitter.recreate_message(search, 1)
+    [type.strip, category.strip, message.strip]
+  end
+  
+  def self.recreate_message str, start_from
+    count = 0
+    message = ""
+    str.split(" ").each {|item|
+      message += " #{item}" if count > start_from #we dont need SELL and category here
+      count += 1
+    }
+    message
+  end
+  
 end
