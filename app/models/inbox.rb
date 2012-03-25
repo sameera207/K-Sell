@@ -17,18 +17,29 @@ class Inbox < ActiveRecord::Base
 
   def transfer
 
-    type,category,message = WordSplitter.format_word(text)
-    if type == "SELL"
+    begin
 
-      p '--- SELLING REQUEST ---'
-      handle_sell(message, category)
+      type,category,message = WordSplitter.format_word(text)
 
-    elsif type == "BUY"
+      if type == "SELL"
 
-      p '--- BUYING REQUEST ---'
-      
-    else
-      rais "ERROR: Donno how to handle this.. sh!#"   
+        p '--- SELLING REQUEST ---'
+        handle_sell(message, category)
+
+      elsif type == "BUY"
+
+        p '--- BUYING REQUEST ---'
+
+      else
+        raise InvalidMessageException
+      end
+
+    rescue InvalidMessageException
+      p '--- INVALID MESSAGE ---'
+      Outbox.send_format(number)
+    rescue Exception => ex
+      p '--- EXCEPTION TRANSFER ---'
+      p ex.message
     end
 
   end
@@ -61,7 +72,5 @@ class Inbox < ActiveRecord::Base
   def handle_buy
     
   end
-  
-  
 
 end

@@ -15,7 +15,7 @@ class WordSplitter
     parts = search.split(' ')
 
     if search.length < 3 or parts.count < 2
-      raise 'invalid format'
+      raise 'Invalid Format'
     end
 
     type = search[0..3]
