@@ -49,7 +49,7 @@ class Inbox < ActiveRecord::Base
     if gateway_record.nil?
       city = 'Colombo'
     else
-      city.gateway_record.area
+      city = gateway_record.area
     end
 
     obj.city = city
