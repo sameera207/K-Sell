@@ -16,27 +16,46 @@ class Inbox < ActiveRecord::Base
   end
 
   def transfer
+
     type,category,message = WordSplitter.format_word(text)
     if type == "SELL"
+
+      p '--- SELLING REQUEST ---'
       handle_sell(message, category)
+
     elsif type == "BUY"
+
+      p '--- BUYING REQUEST ---'
       
     else
       rais "ERROR: Donno how to handle this.. sh!#"   
     end
+
   end
   
   def handle_sell (message, category)
+
     msg = message
     price = message.split(" ")[0]
-    obj = Message.new
+
+    obj = Message.new()
     obj.phone_number = number
     obj.type = "SELL"
     obj.msg = WordSplitter.recreate_message(msg, 0).strip
     obj.price = price
-    obj.city = "colombo"
+
+    gateway_record = Gateway.find_by_number(number)
+
+    if gateway_record.nil?
+      city = 'Colombo'
+    else
+      city.gateway_record.area
+    end
+
+    obj.city = city
     obj.key = category
     obj.save
+
   end
   
   def handle_buy
