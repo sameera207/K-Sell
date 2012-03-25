@@ -8,6 +8,7 @@ class Inbox < ActiveRecord::Base
     #
     #buy message : BUY <CATEGORY> <DESCRIPTION> <PRICE> <CITY>
     #Ex: BUY mobile 15000 Nokia n90 17000 colombo
+
     type,category,message = WordSplitter.format_word(text)
     raise "ERROR: Invalid Type" unless ["BUY","SELL"].include?(type)
     raise "ERROR: Invalid Category" unless Category.catogories.include?(category)
