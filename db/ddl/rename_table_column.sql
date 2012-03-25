@@ -1,0 +1,1 @@
+ALTER TABLE messages CHANGE `type` message_type varchar(255)
