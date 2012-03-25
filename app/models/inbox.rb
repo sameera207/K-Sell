@@ -43,25 +43,32 @@ class Inbox < ActiveRecord::Base
     obj.type = "SELL"
     obj.msg = WordSplitter.recreate_message(msg, 0).strip
     obj.price = price
-
-    gateway_record = Gateway.find_by_number(number)
-
-    if gateway_record.nil?
-      city = 'Colombo'
-    else
-      city = gateway_record.area
-    end
-
     obj.city = city
     obj.key = category
     obj.save
 
   end
   
-  def handle_buy
-    
+  def handle_buy(message, category)
+    obj = Message.new()
+    obj.phone_number = number
+    obj.type = "BUY"
+    obj.msg = message.strip
+    obj.price = 0
+    obj.city = city
+    obj.key = category
+    obj.save    
   end
   
   
+  
+  
+  
+  private
+  def city
+    gateway_record = Gateway.find_by_number(number)
+    gateway_record.nil? ? "Colombo" : gateway_record.area
+  end
+    
 
 end
